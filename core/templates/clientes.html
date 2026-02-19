@@ -1,0 +1,35 @@
+{% load bootstrap5 %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    {% bootstrap_css %}
+</head>
+<body>
+    <h1>Lista de Clientes</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Sobrenome</th>
+                <th>Telefone</th>
+                <th>Email</th>
+            </tr>
+        </thead>
+        {% for c in cli %}
+        <tbody>
+          <tr>
+            <td>{{ c.nome }}</td>
+            <td>{{ c.sobrenome }}</td>
+            <td>{{ c.telefone }}</td>
+            <td>{{ c.email }}</td>
+          </tr>
+        </tbody>
+        {% endfor %}
+      </table>
+
+</body>
+</html>
