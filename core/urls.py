@@ -1,6 +1,6 @@
 from django.urls import path
 from .views import index, contato, produtos, clientes
-from .views import cadastraClientes, salvarClientes
+from .views import salvarClientes, editaCliente, apagaCliente, entrar, sair
 
 
 urlpatterns = [
@@ -8,6 +8,9 @@ urlpatterns = [
     path('contato', contato, name="urlcontato"),
     path('produtos', produtos, name="urlprodutos"),
     path('clientes', clientes, name="urlclientes"),
-    path('cadastraClientes', cadastraClientes, name="urlcadastraClientes"),
     path('salvarClientes', salvarClientes, name="urlsalvarClientes"),
+    path('editaCliente/<int:id>', editaCliente, name="urleditaCliente"),
+    path('apagaCliente/<int:id>', apagaCliente, name="urlapagaCliente"),
+    path('entrar', entrar, name="urlentrar"),
+    path('sair', sair, name="urlsair"),
 ]
