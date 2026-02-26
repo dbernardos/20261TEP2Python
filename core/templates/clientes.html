@@ -31,12 +31,12 @@
             <td>{{ c.email }}</td>
             <td>
               <form action="{% url 'urleditaCliente' c.id %}">
-                <input type="submit" value="📝" class="btn btn-warning">
+                <input type="submit" value="📝" alt="Editar" class="btn btn-warning">
               </form>
             </td>
             <td>
               <form action="{% url 'urlapagaCliente' c.id %}">
-                <input type="submit" value="🗑️" class="btn btn-danger">
+                <input type="submit" value="🗑️"  alt="Exluir" class="btn btn-danger">
               </form>
             </td>
           </tr>

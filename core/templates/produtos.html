@@ -9,14 +9,34 @@
 </head>
 <body>
     <div class="container">
-        <h1>Lista de Produtos</h1>
-        {% for p in prod %}
-            <h2>{{ p.nome }}</h2>
-        {% endfor %}
-
         <form action="{% url 'urlsair' %}">
             <input type="submit" value="Sair" class="btn btn-danger">
         </form>
+
+        <h1>Lista de Produtos</h1>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Preço</th>
+                    <th>Descrição</th>
+                    <th>Quantidade</th>
+                    <th>Data de validade</th>
+                </tr>
+            </thead>
+            {% for p in produtos %}
+            <tbody>
+              <tr>
+                <td>{{ p.nome }}</td>
+                <td>{{ p.preco }}</td>
+                <td>{{ p.qtde }}</td>
+                <td>{{ p.descricao }}</td>
+              </tr>
+            </tbody>
+            {% endfor %}
+          </table>
+
+
     </div>
 </body>
 </html>
