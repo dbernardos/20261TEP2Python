@@ -4,6 +4,7 @@ from django.http import HttpResponse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from .forms import ProdutoForm
 
 def index(request):
     context = {'curso': 'Desenvolvimento de Sistemas'}
@@ -20,7 +21,7 @@ def contato(request):
 @login_required(login_url='urlentrar')
 def produtos(request):
     produtos = Produto.objects.all()
-    context = {'prod': produtos}
+    context = {'produtos': produtos}
     return render(request, 'produtos.html', context)
 
 @login_required(login_url='urlentrar')
@@ -90,4 +91,13 @@ def entrar(request):
 def sair(request):
     logout(request)
     return redirect('urlentrar')
-    
+
+def salvarProdutos(request):
+    if request.method == 'GET':
+        form = ProdutoForm()
+        return render(request, 'salvarProdutos.html', {'form': form})
+    else:
+        form = ProdutoForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('urlprodutos')

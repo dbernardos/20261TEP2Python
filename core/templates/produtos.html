@@ -9,9 +9,14 @@
 </head>
 <body>
     <div class="container">
-        <form action="{% url 'urlsair' %}">
-            <input type="submit" value="Sair" class="btn btn-danger">
-        </form>
+       
+        <div class="mb-3">
+            <a href="{% url 'urlsalvarProdutos' %}" class="btn btn-primary">➕ Novo produto</a>
+
+            <form action="{% url 'urlsair' %}">
+                <input type="submit" value="Sair" class="btn btn-danger">
+            </form>
+        </div>
 
         <h1>Lista de Produtos</h1>
         <table class="table table-hover">
