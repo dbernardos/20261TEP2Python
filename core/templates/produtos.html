@@ -13,9 +13,9 @@
         <div class="mb-3">
             <a href="{% url 'urlsalvarProdutos' %}" class="btn btn-primary">➕ Novo produto</a>
 
-            <form action="{% url 'urlsair' %}">
-                <input type="submit" value="Sair" class="btn btn-danger">
-            </form>
+            <a href="{% url 'urlsair' %}" class="btn btn-danger">
+                Sair
+            </a>
         </div>
 
         <h1>Lista de Produtos</h1>
@@ -27,6 +27,7 @@
                     <th>Descrição</th>
                     <th>Quantidade</th>
                     <th>Data de validade</th>
+                    <th>Editar</th>
                 </tr>
             </thead>
             {% for p in produtos %}
@@ -36,6 +37,12 @@
                 <td>{{ p.preco }}</td>
                 <td>{{ p.qtde }}</td>
                 <td>{{ p.descricao }}</td>
+                <td>{{ p.data_de_validade }}</td>
+                <td>
+                    <a href="{% url 'urleditarProdutos' p.id %}" class="btn btn-warning">
+                        📝 Editar
+                    </a>
+                </td>
               </tr>
             </tbody>
             {% endfor %}

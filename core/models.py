@@ -7,6 +7,7 @@ class Produto(models.Model):
     descricao = models.CharField(max_length=200)
     qtde = models.PositiveIntegerField(default=0)
     data_de_validade = models.DateField(auto_now_add=True)
+    imagem = models.ImageField(upload_to='produtos/', null=True, blank=True)
     def __str__(self):
         return self.nome
 

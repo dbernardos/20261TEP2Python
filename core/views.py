@@ -7,7 +7,8 @@ from django.contrib.auth.decorators import login_required
 from .forms import ProdutoForm
 
 def index(request):
-    context = {'curso': 'Desenvolvimento de Sistemas'}
+    produtos = Produto.objects.all()
+    context = {'produtos': produtos}
     return render(request, 'index.html', context)
 
 def contato(request):
@@ -98,6 +99,17 @@ def salvarProdutos(request):
         return render(request, 'salvarProdutos.html', {'form': form})
     else:
         form = ProdutoForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('urlprodutos')
+
+def editarProdutos(request, id):
+    produto = Produto.objects.get(id=id)
+    if request.method == 'GET':
+        form = ProdutoForm(instance=produto)
+        return render(request, 'editarProdutos.html', {'form': form})
+    else:
+        form = ProdutoForm(request.POST, request.FILES, instance=produto)
         if form.is_valid():
             form.save()
             return redirect('urlprodutos')

@@ -1,12 +1,29 @@
+{% load bootstrap5 %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    {% bootstrap_css %}
 </head>
 <body>
-    <h1>Pagina inicial</h1>
-    <h2>{{ curso }}</h2>
+    <div class="container">
+        <h1>Pagina inicial</h1>
+        {% for p in produtos %}
+        <div class="card-group">
+            <div class="card">
+              <img src="{{ p.imagem }}" alt="{{ produto.nome }}">
+              <div class="card-body">
+                <h5 class="card-title">{{ p.nome }}</h5>
+                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+              </div>
+              <div class="card-footer">
+                <small class="text-body-secondary">{{ p.data_de_validade}}</small>
+              </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
 </body>
 </html>
