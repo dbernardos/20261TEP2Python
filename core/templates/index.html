@@ -1,29 +1,32 @@
-{% load bootstrap5 %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    {% bootstrap_css %}
-</head>
-<body>
-    <div class="container">
-        <h1>Pagina inicial</h1>
-        {% for p in produtos %}
+{% extends 'global/base.html' %}
+
+{% block title %}
+  Dashboard
+{% endblock %}
+
+{% block content %}
+  <div class="container">
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4">
+      {% for p in produtos %}
         <div class="card-group">
-            <div class="card">
-              <img src="{{ p.imagem }}" alt="{{ produto.nome }}">
-              <div class="card-body">
-                <h5 class="card-title">{{ p.nome }}</h5>
-                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+          <div class="card">
+            {% if p.imagem %}
+              <img src="{{ p.imagem.url }}" alt="{{ p.nome }}" />
+            {% else %}
+              <div class="card-img-top bg-secondary d-flex align-items-center justify-content-center" style="hight: 200px;">
+                <span class="text-white">Sem imagem</span>
               </div>
-              <div class="card-footer">
-                <small class="text-body-secondary">{{ p.data_de_validade}}</small>
-              </div>
+            {% endif %}
+            <div class="card-body">
+              <h5 class="card-title">{{ p.nome }}</h5>
+              <p class="card-text">{{ p.descricao|truncatechars:100 }}</p>
             </div>
+            <div class="card-footer">
+              <small class="text-body-secondary">{{ p.data_de_validade }}</small>
+            </div>
+          </div>
         </div>
-        {% endfor %}
+      {% endfor %}
     </div>
-</body>
-</html>
+  </div>
+{% endblock %}

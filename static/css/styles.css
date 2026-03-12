@@ -1,0 +1,90 @@
+.main-header-container {
+    background: #13141f;
+}
+
+.main-logo {
+    font-size: 4rem;
+    color: white;
+    text-decoration: none;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: center;
+    width: fit-content;
+    margin: 0 auto;
+}
+
+.container {
+    max-width: 144rem;
+    margin: 0 auto;
+    padding: 4rem;
+}
+
+h1, h2, h3, h4, h5, h5 {
+    font-family: 'Roboto Slab', serif;
+}
+
+img {
+    max-width: 100%;
+}
+
+a {
+    color: #269fe6;
+    text-decoration: none;
+}
+
+.hidden-text {
+    display: none;
+}
+
+.menu-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 255px;
+    min-height: 100vh;
+    overflow-y: auto;
+    background-color: #269fe6;
+    z-index: 2;
+    transition: all 300ms ease-in-out;
+}
+
+.menu-container a {
+    color: white;
+}
+
+/*
+.menu-hidden {
+    left: -255px;
+}*/
+
+.button-show-menu {
+    position: fixed;
+    left: 265px;
+    top: 2rem;
+    color: white;
+    background-color: #269fe6;
+    border: none;
+    font-size: 2rem;
+    z-index: 3;
+    padding: 1rem;
+    visibility: hidden;
+    opacity: 0;
+    transition: all 300ms ease-in-out;
+    border-radius: 0 4px 4px 0;
+    cursor: pointer;
+}
+
+.button-show-menu-visible {
+    visibility: visible;
+    opacity: 1;
+    left: 5px;
+}
+
+.menu-nav {
+    display: flex;
+    flex-flow: column wrap;
+    font-size: 1rem;
+    font-family: 'Roboto Slab', serif;
+}

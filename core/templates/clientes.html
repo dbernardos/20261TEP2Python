@@ -1,13 +1,10 @@
-{% load bootstrap5 %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clientes</title>
-    {% bootstrap_css %}
-</head>
-<body>
+{% extends 'global/base.html' %}
+
+{% block title %}
+  Produtos
+{% endblock %}
+
+{% block content %}
   <div class="container">
     <h1>Lista de Clientes</h1>
 
@@ -47,5 +44,4 @@
         <input type="submit" value="➕ Novo cliente" class="btn btn-primary">
       </form>
 <div>
-</body>
-</html>
+{% endblock %}

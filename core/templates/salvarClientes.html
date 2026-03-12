@@ -1,14 +1,10 @@
-{% load bootstrap5 %}
+{% extends 'global/base.html' %}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    {% bootstrap_css %}
-</head>
-<body>
+{% block title %}
+  Produtos
+{% endblock %}
+
+{% block content %}
     <div class="container">
         <h1>Formulário de Cadastro de Cliente</h1>
 
@@ -22,5 +18,4 @@
             <p><input type="submit" value="Salvar" class="btn btn-success"></p>
         </form>
     </div>
-</body>
-</html>
+{% endblock %}

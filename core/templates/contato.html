@@ -1,14 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
+{% extends 'global/base.html' %}
+
+{% block title %}
+  Contato
+{% endblock %}
+
+{% block content %}
     <h1>Página de contato</h1>
     <h2>Nome: {{ nome }}</h2>
     <h2>Telefone: {{ telefone }}</h2>
     <h2>Email: {{ email }}</h2>
-</body>
-</html>
+{% endblock %}
