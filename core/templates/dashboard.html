@@ -1,0 +1,51 @@
+{% extends 'global/base.html' %}
+
+{% block title %}
+  Gráficos
+{% endblock %}
+
+{% block content %}
+  <div class="container-fluid mt-4">
+    <h1>Análise das avaliações de livros</h1>
+    <hr />
+
+    <div class="row">
+      <div class="col-lg-10 mb-4">
+        <div class="card h-100">
+          <div class="card-header">Distribuição das notas</div>
+          <div class="card-body">
+            {% if grafico_distribuicao_notas %}
+              <img src="data:image/png;base64,{{ grafico_distribuicao_notas }}" class="img-fluid" alt="aaa" />
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-10 mb-4">
+        <div class="card h-100">
+          <div class="card-header">Top livros</div>
+          <div class="card-body">
+            {% if grafico_top_livros %}
+              <img src="data:image/png;base64,{{ grafico_top_livros }}" class="img-fluid" alt="aaa" />
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-10 mb-4">
+        <div class="card h-100">
+          <div class="card-header">Top livros</div>
+          <div class="card-body">
+            {% if grafico_top_livros %}
+              <img src="data:image/png;base64,{{ grafico_usuarios_mais_ativos }}" class="img-fluid" alt="aaa" />
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
