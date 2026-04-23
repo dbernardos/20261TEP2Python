@@ -50,21 +50,21 @@ def sentimento_reviews_view(df):
 
     def classificar(texto):
         texto = str(texto).lower()
-        if any(p in texto for p in ruins01): return 'Ruim'
-        if any(p in texto for p in ruins02): return 'Muito Ruim'
-        if any(p in texto for p in ruins03): return 'Péssimo'
         if any(p in texto for p in boas01): return 'Bom'
         if any(p in texto for p in boas02): return 'Muito Bom'
         if any(p in texto for p in boas03): return 'Excelente'
-
+        if any(p in texto for p in ruins01): return 'Ruim'
+        if any(p in texto for p in ruins02): return 'Muito Ruim'
+        if any(p in texto for p in ruins03): return 'Péssimo'
         return 'Neutro'
 
     df['sentimento'] = df['review_text'].fillna('').apply(classificar)
     contagem = df['sentimento'].value_counts()
-    colors = ['lightgreen', 'mediumseagreen', 'green', 'lightcoral', 'salmon', 'red', 'lightskyblue']
+    cores = ['lightgreen', 'mediumseagreen', 'green', 'lightcoral', 'lightsalmon', 'red', 'lightskyblue']
+    rotulos = ['Bom', 'Muito Bom', 'Excelente', 'Ruim', 'Muito Ruim', 'Péssimo', 'Neutro']
 
     plt.figure(figsize=(10, 6))
-    plt.pie(contagem, autopct='%1.1f%%', colors=colors)
+    plt.pie(contagem, autopct='%1.1f%%', colors=cores, labels=rotulos)
     plt.title('Distribuição de Sentimentos nos Sumários das Avaliações')
     plt.tight_layout()
     grafico_sentimento = plot_to_base64(plt.gcf())
