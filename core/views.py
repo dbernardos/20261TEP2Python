@@ -8,30 +8,48 @@ from .forms import ProdutoForm
 
 import io
 import urllib, base64
-import pandas as pd
 import matplotlib
-matplotlib.use('TkAgg')
-import matplotlib.pyplot as plt
+matplotlib.use('Agg')
 
+import pandas as pd
+import matplotlib.pyplot as plt
 
 def dashboard(request):
     df = get_dataframe()
     grafico_distribuicao_notas = distribuicao_das_notas_view(df)
     grafico_top_livros, tam = livros_mais_avaliados_view(df)
     grafico_usuarios_mais_ativos = usuarios_mais_ativos_view(df)
+    grafico_evolucao_reviews = evolucao_reviews_view(df)
 
     context = {
         'grafico_distribuicao_notas': grafico_distribuicao_notas,
         'grafico_top_livros': grafico_top_livros,
         'total_avaliacoes': tam,
         'grafico_usuarios_mais_ativos': grafico_usuarios_mais_ativos,
+        'grafico_evolucao_reviews': grafico_evolucao_reviews,
     }
 
     return render(request, 'dashboard.html', context)
 
 
-
 # -------------------------------------------- #
+def evolucao_reviews_view(df):
+    df['data_ptbr'] = pd.to_datetime(df['review_time'], unit='s')
+    df['ano'] = df['data_ptbr'].dt.year
+    avaliacoes_por_ano = df.groupby('ano').size()
+
+    plt.figure(figsize=(10, 6))
+    # mais_ativos.sort_values().plot(kind='barh', color='blue')
+    avaliacoes_por_ano.plot(kind='line', marker='o', color='red')
+    plt.title('Evolução do Número de Avaliações por Ano')
+    plt.xlabel('Ano')
+    plt.ylabel('Quantidade de avaliações')
+    plt.tight_layout()
+    grafico_evolucao_reviews = plot_to_base64(plt.gcf())
+    plt.close()
+
+    return grafico_evolucao_reviews
+
 def usuarios_mais_ativos_view(df):
     mais_ativos = df['profile_name'].value_counts().nlargest(15)
     plt.figure(figsize=(10, 6))
