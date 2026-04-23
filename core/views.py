@@ -20,6 +20,8 @@ def dashboard(request):
     grafico_top_livros, tam = livros_mais_avaliados_view(df)
     grafico_usuarios_mais_ativos = usuarios_mais_ativos_view(df)
     grafico_evolucao_reviews = evolucao_reviews_view(df)
+    grafico_preco_score = preco_vs_score_view(df)
+    grafico_sentimento_reviews = sentimento_reviews_view(df)
 
     context = {
         'grafico_distribuicao_notas': grafico_distribuicao_notas,
@@ -27,19 +29,72 @@ def dashboard(request):
         'total_avaliacoes': tam,
         'grafico_usuarios_mais_ativos': grafico_usuarios_mais_ativos,
         'grafico_evolucao_reviews': grafico_evolucao_reviews,
+        'grafico_preco_score': grafico_preco_score,
+        'grafico_sentimento_reviews': grafico_sentimento_reviews,
     }
 
     return render(request, 'dashboard.html', context)
 
 
 # -------------------------------------------- #
+def sentimento_reviews_view(df):
+    # boas = ['good', 'great', 'excellent', 'I loved', 'I recommend']
+    # ruins = ['bad', 'terrible', 'disappointing', 'I didn\'t like it', 'terrible']
+    ruins01 = ['annoyed', 'displeased', 'uneasy', 'bothered', 'disappointed', 'unsettled', 'dissatisfied', 'discouraged', 'concerned', 'worried', 'upset', 'troubled', 'disheartened', 'discontent', 'irritated', 'vexed', 'perturbed', 'distressed', 'dismayed', 'disgruntled']
+    ruins02 = ['angry', 'frustrated', 'anxious', 'resentful', 'bitter', 'hostile', 'agitated', 'disturbed', 'offended', 'indignant', 'exasperated', 'aggrieved', 'disgusted', 'repelled', 'appalled', 'outraged', 'fearful', 'despondent', 'miserable', 'gloomy']
+    ruins03 = ['furious', 'enraged', 'livid', 'incensed', 'wrathful', 'seething', 'berserk', 'devastated', 'heartbroken', 'despairing', 'hopeless', 'horrified', 'aghast', 'traumatized', 'shattered', 'broken', 'tormented', 'anguished', 'vengeful', 'hatred']
+
+    boas01 = ['pleased', 'content', 'glad', 'happy', 'satisfied', 'comfortable', 'relieved', 'hopeful', 'cheerful', 'optimistic', 'grateful', 'appreciative', 'calm', 'peaceful', 'interested', 'curious', 'encouraged', 'confident', 'proud', 'amused']
+    boas02 = ['joyful', 'delighted', 'excited', 'enthusiastic', 'thrilled', 'elated', 'inspired', 'motivated', 'passionate', 'fond', 'affectionate', 'charmed', 'impressed', 'admiring', 'thankful', 'blessed', 'uplifted', 'rejoicing', 'vibrant', 'radiant']
+    boas03 = ['ecstatic', 'euphoric', 'overjoyed', 'blissful', 'jubilant', 'exhilarated', 'elated', 'rapturous', 'transcendent', 'serene', 'fulfilled', 'empowered', 'triumphant', 'glorified', 'exalted', 'enchanted', 'mesmerized', 'awestruck', 'reverent', 'love']
+
+    def classificar(texto):
+        texto = str(texto).lower()
+        if any(p in texto for p in ruins01): return 'Ruim'
+        if any(p in texto for p in ruins02): return 'Muito Ruim'
+        if any(p in texto for p in ruins03): return 'Péssimo'
+        if any(p in texto for p in boas01): return 'Bom'
+        if any(p in texto for p in boas02): return 'Muito Bom'
+        if any(p in texto for p in boas03): return 'Excelente'
+
+        return 'Neutro'
+
+    df['sentimento'] = df['review_text'].fillna('').apply(classificar)
+    contagem = df['sentimento'].value_counts()
+    colors = ['lightgreen', 'mediumseagreen', 'green', 'lightcoral', 'salmon', 'red', 'lightskyblue']
+
+    plt.figure(figsize=(10, 6))
+    plt.pie(contagem, autopct='%1.1f%%', colors=colors)
+    plt.title('Distribuição de Sentimentos nos Sumários das Avaliações')
+    plt.tight_layout()
+    grafico_sentimento = plot_to_base64(plt.gcf())
+    plt.close()
+
+    return grafico_sentimento
+    
+
+def preco_vs_score_view(df):
+    df_preco = df[df['price'] > 0]
+    df_preco = df_preco.sample(n=1000)
+
+    plt.figure(figsize=(10, 6))
+    plt.scatter(df_preco['price'], df_preco['review_score'], alpha=0.3, color='green')
+    plt.title('Correlação entre Preço e Nota da Avaliação')
+    plt.xlabel('Preço (R$)')
+    plt.ylabel('Score da avaliação')
+    plt.tight_layout()
+    grafico_preco_score = plot_to_base64(plt.gcf())
+    plt.close()
+
+    return grafico_preco_score
+
+
 def evolucao_reviews_view(df):
     df['data_ptbr'] = pd.to_datetime(df['review_time'], unit='s')
     df['ano'] = df['data_ptbr'].dt.year
     avaliacoes_por_ano = df.groupby('ano').size()
 
     plt.figure(figsize=(10, 6))
-    # mais_ativos.sort_values().plot(kind='barh', color='blue')
     avaliacoes_por_ano.plot(kind='line', marker='o', color='red')
     plt.title('Evolução do Número de Avaliações por Ano')
     plt.xlabel('Ano')

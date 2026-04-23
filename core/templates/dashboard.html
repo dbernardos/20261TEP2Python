@@ -59,6 +59,31 @@
           </div>
         </div>
       </div>
+
+      <div class="row">
+        <div class="col-lg-10 mb-4">
+          <div class="card h-100">
+            <div class="card-header">Correlação do preco e o score de um livro</div>
+            <div class="card-body">
+              {% if grafico_top_livros %}
+                <img src="data:image/png;base64,{{ grafico_preco_score }}" class="img-fluid" alt="aaa" />
+              {% endif %}
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-lg-10 mb-4">
+            <div class="card h-100">
+              <div class="card-header">Análise de sentimentos sobre as avaliações</div>
+              <div class="card-body">
+                {% if grafico_top_livros %}
+                  <img src="data:image/png;base64,{{ grafico_sentimento_reviews }}" class="img-fluid" alt="aaa" />
+                {% endif %}
+              </div>
+            </div>
+          </div>
+
     </div>
   </div>
 {% endblock %}
